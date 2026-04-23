@@ -6,33 +6,31 @@
     <title>Курс: Проблемы изучения творчества Ф.М. Достоевского</title>
     <link href="https://googleapis.com" rel="stylesheet">
     <style>
-        :root {
-            --primary: #2c3e50;
-            --accent: #c0392b;
-            --bg: #f4f4f4;
-            --white: #ffffff;
-            --text: #333;
-        }
+        :root { --primary: #2c3e50; --accent: #c0392b; --bg: #f4f4f4; --white: #ffffff; --text: #333; }
         body { font-family: 'Roboto', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; margin: 0; }
-        header { background: var(--primary); color: var(--white); padding: 40px 20px; text-align: center; }
-        h1 { font-family: 'Playfair Display', serif; margin: 0; font-size: 2rem; }
+        header { background: var(--primary); color: var(--white); padding: 30px 20px; text-align: center; }
+        h1 { font-family: 'Playfair Display', serif; margin: 0; font-size: 1.8rem; }
         
-        .container { max-width: 1000px; margin: 20px auto; background: var(--white); padding: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .container { max-width: 900px; margin: 20px auto; background: var(--white); padding: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border-radius: 8px; min-height: 500px; }
         
-        /* Вкладки */
         .tabs { display: flex; border-bottom: 2px solid #ddd; margin-bottom: 20px; }
-        .tab-btn { padding: 15px 25px; cursor: pointer; border: none; background: none; font-weight: bold; color: #777; transition: 0.3s; border-bottom: 3px solid transparent; }
+        .tab-btn { padding: 15px 20px; cursor: pointer; border: none; background: none; font-weight: bold; color: #777; border-bottom: 3px solid transparent; }
         .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
-        .tab-content { display: none; animation: fadeIn 0.4s; }
-        .tab-content.active { display: block; }
 
-        /* Стили контента */
-        .section-title { color: var(--primary); border-left: 5px solid var(--accent); padding-left: 15px; margin: 25px 0 15px; }
-        .plan-item { margin-bottom: 20px; padding: 15px; background: #f9f9f9; border-radius: 5px; }
-        .plan-item h3 { margin-top: 0; color: var(--accent); font-size: 1.1rem; }
-        ul { padding-left: 20px; }
-        li { margin-bottom: 8px; }
+        /* Список занятий */
+        .plan-list { display: grid; gap: 10px; }
+        .plan-card { padding: 15px; background: #f9f9f9; border: 1px solid #eee; cursor: pointer; transition: 0.2s; border-left: 4px solid var(--primary); }
+        .plan-card:hover { background: #f0f0f0; border-left-color: var(--accent); transform: translateX(5px); }
+        .plan-card h3 { margin: 0; font-size: 1.1rem; color: var(--primary); }
 
+        /* Страница подробностей */
+        #lesson-detail { display: none; animation: fadeIn 0.3s; }
+        .back-btn { background: var(--primary); color: white; border: none; padding: 8px 15px; cursor: pointer; margin-bottom: 20px; border-radius: 4px; }
+        .lesson-info { background: #fff; padding: 10px; }
+        .lesson-info h2 { color: var(--accent); font-family: 'Playfair Display', serif; }
+        .q-list { background: #fdf2f2; padding: 15px; border-radius: 5px; margin: 15px 0; }
+
+        .hidden { display: none; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
@@ -40,89 +38,138 @@
 
 <header>
     <h1>Проблемы изучения творчества Ф.М. Достоевского</h1>
-    <p>Спецкурс для бакалавров-филологов</p>
 </header>
 
 <div class="container">
-    <div class="tabs">
-        <button class="tab-btn active" onclick="showTab(event, 'about')">О курсе</button>
-        <button class="tab-btn" onclick="showTab(event, 'plan')">Тематический план</button>
-        <button class="tab-btn" onclick="showTab(event, 'books')">Литература</button>
+    <div id="main-nav" class="tabs">
+        <button class="tab-btn active" onclick="showSection('about')">О курсе</button>
+        <button class="tab-btn" onclick="showSection('plan')">Тематический план</button>
     </div>
 
-    <!-- Вкладка 1: Описание -->
-    <div id="about" class="tab-content active">
-        <h2 class="section-title">Актуальность и цели</h2>
-        <p>Курс посвящен анализу <b>массовых сцен (конклавов)</b> как ключевой структурной единицы поэтики Достоевского. Эти сцены выполняют функции сюжетного катализатора и пространства полифонического диалога.</p>
-        <p><b>Цель курса:</b> сформировать представление о массовых сцена и развить навыки анализа их идеологической и эволюционной динамики.</p>
-        <h2 class="section-title">Формы контроля</h2>
-        <ul>
-            <li><b>Текущий:</b> участие в семинарах, сравнительный анализ двух сцен.</li>
-            <li><b>Итоговый:</b> зачёт в форме защиты аналитического эссе.</li>
-        </ul>
+    <!-- Раздел: О КУРСЕ -->
+    <div id="about" class="section">
+        <h2>Цели курса</h2>
+        <p>Курс направлен на формирование у студентов представления о массовых сценах как о ключевом элементе поэтики Ф.М. Достоевского.</p>
+        <p><b>Задачи:</b> Анализ эволюции образа толпы, изучение структуры "конклав" и междисциплинарный подход (психология масс).</p>
     </div>
 
-    <!-- Вкладка 2: План занятий -->
-    <div id="plan" class="tab-content">
-        <h2 class="section-title">Программа семинаров</h2>
-        
-        <div class="plan-item">
-            <h3>Занятие 1. Теоретические основы</h3>
-            <p>Понятие «конклавы», полифония, карнавализация и хронотоп.</p>
+    <!-- Раздел: ПЛАН (Список) -->
+    <div id="plan" class="section hidden">
+        <div id="plan-list" class="plan-list">
+            <div class="plan-card" onclick="openLesson(1)">
+                <h3>Занятие 1. Введение. Теоретические основы</h3>
+                <small>Понятие «конклавы», полифония, карнавализация.</small>
+            </div>
+            <div class="plan-card" onclick="openLesson(2)">
+                <h3>Занятие 2. Ранние опыты: «Униженные и оскорбленные»</h3>
+                <small>Мелодраматическая однозначность и пассивная толпа.</small>
+            </div>
+            <div class="plan-card" onclick="openLesson(3)">
+                <h3>Занятие 3. «Игрок»: Бинарная композиция</h3>
+                <small>Пространство рулетки и судьба героя.</small>
+            </div>
+            <div class="plan-card" onclick="openLesson(4)">
+                <h3>Занятие 4. «Преступление и наказание»</h3>
+                <small>Сенная площадь и сны Раскольникова.</small>
+            </div>
+            <div class="plan-card" onclick="openLesson(5)">
+                <h3>Занятие 5. «Идиот»: Толпа-персонаж</h3>
+                <small>Швейцарские дети и именин Настасьи Филипповны.</small>
+            </div>
+            <div class="plan-card" onclick="openLesson(6)">
+                <h3>Занятие 6. «Бесы»: Стихия агрессии</h3>
+                <small>Политизированная толпа и «стадность».</small>
+            </div>
+            <div class="plan-card" onclick="openLesson(7)">
+                <h3>Занятие 7. «Подросток»</h3>
+                <small>Обезличивающая среда и денежная идея.</small>
+            </div>
+            <div class="plan-card" onclick="openLesson(8)">
+                <h3>Занятие 8. «Братья Карамазовы»</h3>
+                <small>От скандала к соборности. Сцена у камня.</small>
+            </div>
         </div>
 
-        <div class="plan-item">
-            <h3>Занятие 2. «Униженные и оскорбленные»</h3>
-            <p>Переход от сентиментализма к полифонии. Анализ сцены смерти Смита.</p>
+        <!-- Детали занятия (заполняются через JS) -->
+        <div id="lesson-detail">
+            <button class="back-btn" onclick="closeLesson()">← Назад к списку</button>
+            <div id="lesson-content" class="lesson-info"></div>
         </div>
-
-        <div class="plan-item">
-            <h3>Занятие 4. «Преступление и наказание»</h3>
-            <p>Психологизация сцен. Сенная площадь как локус перелома. Карнавализация поминок Мармеладова.</p>
-        </div>
-
-        <div class="plan-item">
-            <h3>Занятие 6. «Бесы»</h3>
-            <p>Толпа как агрессивная стихия. Сходство революционной группы с сектой.</p>
-        </div>
-
-        <div class="plan-item">
-            <h3>Занятие 8. «Братья Карамазовы»</h3>
-            <p>Путь от скандала к <b>соборности</b>. Сцена у камня как единственная положительная модель толпы.</p>
-        </div>
-    </div>
-
-    <!-- Вкладка 3: Литература -->
-    <div id="books" class="tab-content">
-        <h2 class="section-title">Основные источники</h2>
-        <ul>
-            <li>Бахтин М.М. «Проблемы поэтики Достоевского».</li>
-            <li>Гроссман Л.П. «Поэтика Достоевского».</li>
-            <li>Сараскина Л.И. «Бесы», или Русская трагедия.</li>
-            <li>Лебон Г. «Психология народов и масс».</li>
-        </ul>
-        <h2 class="section-title">Электронные ресурсы</h2>
-        <p>Антология жизни и творчества: <a href="http://fedordostoevsky.ru" target="_blank">fedordostoevsky.ru</a>.</p>
     </div>
 </div>
 
-<footer>
-    <center><p style="color: #888; padding: 20px;">&copy; 2026 Кафедра филологии. Программа курса 45.03.01.</p></center>
-</footer>
-
 <script>
-    function showTab(evt, tabId) {
-        let contents = document.getElementsByClassName("tab-content");
-        for (let s of contents) s.classList.remove("active");
-        
-        let btns = document.getElementsByClassName("tab-btn");
-        for (let b of btns) b.classList.remove("active");
-        
-        document.getElementById(tabId).classList.add("active");
-        evt.currentTarget.classList.add("active");
+    const lessonData = {
+        1: {
+            title: "Теоретические основы изучения массовых сцен",
+            questions: ["Понятие «конклавы» в литературоведении.", "Толпа: от фона к действующему лицу.", "История изучения: обзор ключевых работ."],
+            lit: "Бахтин М.М. 'Проблемы поэтики Достоевского', Гроссман Л.П. 'Поэтика Достоевского'."
+        },
+        2: {
+            title: "«Униженные и оскорбленные»",
+            questions: ["Типология сцен: уличные, семейные драмы.", "Функции: мелодраматическая и социально-критическая.", "Толпа как равнодушный фон."],
+            lit: "Кирпотин В.Я. 'Роман Достоевского Униженные и оскорбленные'."
+        },
+        3: {
+            title: "«Игрок»: Бинарная композиция",
+            questions: ["Толпа в отеле vs Толпа в игорном доме.", "Рулетка как хронотоп.", "Эволюция Алексея Ивановича."],
+            lit: "Габдуллина В.И. 'Пространство рулетки в романе Игрок'."
+        },
+        4: {
+            title: "«Преступление и наказание»",
+            questions: ["Сенная площадь как локус покаяния.", "Карнавализация: поминки Мармеладова.", "Сны Раскольникова как массовые сцены."],
+            lit: "Тихомиров Б.Н. 'Топография массовых сцен'."
+        },
+        5: {
+            title: "«Идиот»: Толпа как полифонический персонаж",
+            questions: ["Антиномия толпы: жажда зрелища vs сострадание.", "Лидеры толпы: Рогожин, Мышкин.", "Положительная модель: швейцарские дети."],
+            lit: "Верина У.Ю. 'Анализ сцен и эпизодов в романе Идиот'."
+        },
+        6: {
+            title: "«Бесы»: Толпа как самостоятельная стихия",
+            questions: ["Агрессия как сквозной мотив.", "Сходство революционной группы с сектой.", "Кольцевая композиция: от смеха до убийства."],
+            lit: "Сараскина Л.И. 'Бесы, или Русская трагедия'."
+        },
+        7: {
+            title: "«Подросток»: Отражение противоречий",
+            questions: ["Толпа как разлагающая среда.", "История Джона Ло.", "Боязнь толпы как двигатель конфликта Аркадия."],
+            lit: "Семенов Е.И. 'Роман Достоевского Подросток'."
+        },
+        8: {
+            title: "«Братья Карамазовы»: К соборности",
+            questions: ["Сцена в келье: инверсия высокого и низкого.", "Судебная ошибка коллективного разума.", "Сцена у камня: феномен соборности."],
+            lit: "Бахтин М.М. 'Проблемы поэтики Достоевского'."
+        }
+    };
+
+    function showSection(id) {
+        document.querySelectorAll('.section').forEach(s => s.classList.add('hidden'));
+        document.getElementById(id).classList.remove('hidden');
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        event.currentTarget.classList.add('active');
+        closeLesson();
+    }
+
+    function openLesson(id) {
+        const lesson = lessonData[id];
+        const content = document.getElementById('lesson-content');
+        content.innerHTML = `
+            <h2>${lesson.title}</h2>
+            <div class="q-list">
+                <strong>Ключевые вопросы:</strong>
+                <ul>${lesson.questions.map(q => `<li>${q}</li>`).join('')}</ul>
+            </div>
+            <p><strong>Литература:</strong><br>${lesson.lit}</p>
+        `;
+        document.getElementById('plan-list').style.display = 'none';
+        document.getElementById('lesson-detail').style.display = 'block';
+    }
+
+    function closeLesson() {
+        document.getElementById('plan-list').style.display = 'grid';
+        document.getElementById('lesson-detail').style.display = 'none';
     }
 </script>
 
 </body>
 </html>
-
