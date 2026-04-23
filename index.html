@@ -23,44 +23,17 @@
             line-height: 1.6;
         }
 
-        /* Обновленный хедер с изображением */
+        /* Обложка сайта */
         header {
-            height: 60vh;
-            min-height: 400px;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            padding: 40px;
-            position: relative;
-            background: linear-gradient(to top, var(--bg) 5%, transparent 60%), 
-                        url('hero.png') center/cover no-repeat;
-            /* ВНИМАНИЕ: Если изображение не загрузилось, замените URL выше на путь к вашему файлу на GitHub */
-        }
-
-        .header-content {
-            max-width: 900px;
-            margin: 0 auto;
             width: 100%;
-            z-index: 2;
-        }
-
-        h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(2rem, 5vw, 3.5rem);
-            line-height: 1.1;
-            margin: 0;
-            color: #fff;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
-        }
-
-        .subtitle {
-            color: var(--accent);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            margin-bottom: 10px;
-            display: block;
+            aspect-ratio: 16 / 9; /* Сохраняет пропорции вашего изображения */
+            max-height: 90vh;
+            background-color: #000;
+            background-image: url('hero.png'); /* Файл должен называться hero.png */
+            background-repeat: no-repeat;
+            background-position: center top;
+            background-size: contain; 
+            border-bottom: 1px solid var(--border);
         }
 
         .container {
@@ -69,11 +42,13 @@
             padding: 40px 20px;
         }
 
+        /* Вкладки */
         .tabs {
             display: flex;
             gap: 30px;
             margin-bottom: 40px;
             border-bottom: 1px solid var(--border);
+            overflow-x: auto;
         }
 
         .tab-btn {
@@ -83,8 +58,10 @@
             padding: 15px 0;
             font-size: 1rem;
             cursor: pointer;
+            white-space: nowrap;
             transition: 0.3s;
             position: relative;
+            font-family: 'Inter', sans-serif;
         }
 
         .tab-btn.active { color: #fff; }
@@ -98,8 +75,25 @@
             background: var(--accent);
         }
 
-        /* Список занятий */
-        .plan-list { display: grid; gap: 1px; background: var(--border); border: 1px solid var(--border); }
+        .section-title {
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .hidden { display: none; }
+
+        /* Тематический план */
+        .plan-list {
+            display: grid;
+            gap: 1px;
+            background: var(--border);
+            border: 1px solid var(--border);
+        }
+
         .plan-card {
             background: var(--bg);
             padding: 25px;
@@ -109,6 +103,7 @@
             justify-content: space-between;
             align-items: center;
         }
+
         .plan-card:hover { background: var(--card-bg); }
         .plan-card h3 { margin: 0; font-weight: 400; font-size: 1.1rem; }
         .plan-card span { color: var(--accent); font-size: 0.7rem; letter-spacing: 1px; }
@@ -126,14 +121,11 @@
             transition: 0.3s;
         }
         .back-btn:hover { border-color: var(--accent); color: #fff; }
-        .lesson-content h2 { font-family: 'Playfair Display', serif; font-size: 2rem; margin-top: 0; color: #fff; }
-
+        
+        .lesson-content h2 { font-family: 'Playfair Display', serif; font-size: 2.2rem; margin-top: 0; color: #fff; }
         .q-list { list-style: none; padding: 0; margin: 30px 0; }
         .q-list li { padding: 15px 0; border-bottom: 1px solid var(--border); color: var(--text-dim); }
         .q-list li::before { content: "→"; margin-right: 15px; color: var(--accent); }
-
-        .hidden { display: none; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         footer {
             margin-top: 60px;
@@ -143,72 +135,84 @@
             font-size: 0.8rem;
             text-align: center;
         }
-        a { color: var(--accent); text-decoration: none; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        @media (max-width: 768px) {
+            header { aspect-ratio: auto; height: 250px; background-size: cover; }
+        }
     </style>
 </head>
 <body>
 
-<header id="hero-header">
-    <div class="header-content">
-        <span class="subtitle">Спецкурс / Филология</span>
-        <h1>Проблемы изучения<br>Ф.М. Достоевского</h1>
-    </div>
-</header>
+<header id="main-header"></header>
 
 <div class="container">
     <div class="tabs">
         <button class="tab-btn active" onclick="showSection('about')">О курсе</button>
-        <button class="tab-btn" onclick="showSection('plan')">Программа</button>
-        <button class="tab-btn" onclick="showSection('books')">Источники</button>
+        <button class="tab-btn" onclick="showSection('plan')">Тематический план</button>
+        <button class="tab-btn" onclick="showSection('books')">Полезные источники</button>
     </div>
 
-    <!-- Содержимое вкладок (Остается прежним) -->
+    <!-- РАЗДЕЛ: О КУРСЕ -->
     <div id="about" class="section">
-        <p style="font-size: 1.1rem; color: var(--text-dim); margin-bottom: 30px;">Изучение массовых сцен и «конклавов» как фундаментальной части художественного мира писателя.</p>
-        <h4 style="color: var(--accent); margin-bottom: 5px;">Цель</h4>
-        <p>Анализ идеологической динамики толпы в полифонических романах.</p>
+        <h4 class="section-title">Актуальность</h4>
+        <p style="font-size: 1.1rem; color: var(--text-dim); margin-bottom: 30px;">
+            Курс посвящен анализу массовых сцен (конклавов) как ключевой структурной единицы поэтики Достоевского. 
+            Эти сцены выполняют функции сюжетного катализатора и пространства полифонического диалога.
+        </p>
+        <h4 class="section-title">Цели</h4>
+        <p>Сформировать представление о массовых сценах и развить навыки анализа их идеологической и эволюционной динамики.</p>
+        <h4 class="section-title">Контроль</h4>
+        <p>Зачёт в форме защиты аналитического эссе по окончании семестра.</p>
     </div>
 
+    <!-- РАЗДЕЛ: ПЛАН -->
     <div id="plan" class="section hidden">
         <div id="plan-list" class="plan-list">
-            <div class="plan-card" onclick="openLesson(1)"><h3>01. Теоретические основы</h3><span>ПОДРОБНЕЕ</span></div>
-            <div class="plan-card" onclick="openLesson(2)"><h3>02. Униженные и оскорбленные</h3><span>ПОДРОБНЕЕ</span></div>
-            <div class="plan-card" onclick="openLesson(3)"><h3>03. Игрок</h3><span>ПОДРОБНЕЕ</span></div>
-            <div class="plan-card" onclick="openLesson(4)"><h3>04. Преступление и наказание</h3><span>ПОДРОБНЕЕ</span></div>
-            <div class="plan-card" onclick="openLesson(5)"><h3>05. Идиот</h3><span>ПОДРОБНЕЕ</span></div>
-            <div class="plan-card" onclick="openLesson(6)"><h3>06. Бесы</h3><span>ПОДРОБНЕЕ</span></div>
-            <div class="plan-card" onclick="openLesson(7)"><h3>07. Подросток</h3><span>ПОДРОБНЕЕ</span></div>
-            <div class="plan-card" onclick="openLesson(8)"><h3>08. Братья Карамазовы</h3><span>ПОДРОБНЕЕ</span></div>
+            <div class="plan-card" onclick="openLesson(1)"><h3>01. Теоретические основы</h3><span>ОТКРЫТЬ</span></div>
+            <div class="plan-card" onclick="openLesson(2)"><h3>02. Униженные и оскорбленные</h3><span>ОТКРЫТЬ</span></div>
+            <div class="plan-card" onclick="openLesson(3)"><h3>03. Игрок</h3><span>ОТКРЫТЬ</span></div>
+            <div class="plan-card" onclick="openLesson(4)"><h3>04. Преступление и наказание</h3><span>ОТКРЫТЬ</span></div>
+            <div class="plan-card" onclick="openLesson(5)"><h3>05. Идиот</h3><span>ОТКРЫТЬ</span></div>
+            <div class="plan-card" onclick="openLesson(6)"><h3>06. Бесы</h3><span>ОТКРЫТЬ</span></div>
+            <div class="plan-card" onclick="openLesson(7)"><h3>07. Подросток</h3><span>ОТКРЫТЬ</span></div>
+            <div class="plan-card" onclick="openLesson(8)"><h3>08. Братья Карамазовы</h3><span>ОТКРЫТЬ</span></div>
+            <div class="plan-card" onclick="openLesson(9)"><h3>09. Итоговый семинар</h3><span>ОТКРЫТЬ</span></div>
         </div>
         <div id="lesson-detail">
-            <button class="back-btn" onclick="closeLesson()">← К списку</button>
+            <button class="back-btn" onclick="closeLesson()">← Назад к списку</button>
             <div id="lesson-content" class="lesson-content"></div>
         </div>
     </div>
 
+    <!-- РАЗДЕЛ: ИСТОЧНИКИ -->
     <div id="books" class="section hidden">
-        <ul class="q-list" style="margin-top: 0;">
-            <li><b>Бахтин М.М.</b> Проблемы поэтики Достоевского</li>
-            <li><b>Гроссман Л.П.</b> Поэтика Достоевского</li>
-            <li><b>Сараскина Л.И.</b> Бесы, или Русская трагедия</li>
+        <h4 class="section-title">Библиография</h4>
+        <ul style="list-style: none; padding: 0;">
+            <li style="margin-bottom: 15px;"><b>Бахтин М.М.</b> Проблемы поэтики Достоевского.</li>
+            <li style="margin-bottom: 15px;"><b>Гроссман Л.П.</b> Поэтика Достоевского.</li>
+            <li style="margin-bottom: 15px;"><b>Сараскина Л.И.</b> «Бесы», или Русская трагедия.</li>
+            <li style="margin-bottom: 15px;"><b>Лебон Г.</b> Психология народов и масс.</li>
         </ul>
     </div>
 </div>
 
 <footer>
-    © 2026 / Научный подход к классике
+    © 2026 / Спецкурс по творчеству Ф.М. Достоевского
 </footer>
 
 <script>
     const lessonData = {
-        1: { title: "Теоретические основы", questions: ["Понятие «конклавы»", "Толпа как персонаж", "Методология"] },
-        2: { title: "Униженные и оскорбленные", questions: ["Смерть Смита", "Мелодраматизм"] },
-        3: { title: "Игрок", questions: ["Стихия рулетки", "Отель и игорный дом"] },
+        1: { title: "Теоретические основы", questions: ["Понятие «конклавы»", "Толпа как персонаж", "Методология анализа"] },
+        2: { title: "Униженные и оскорбленные", questions: ["Смерть Смита", "Переход к полифонии"] },
+        3: { title: "Игрок", questions: ["Стихия рулетки", "Отель vs Игорный дом"] },
         4: { title: "Преступление и наказание", questions: ["Сенная площадь", "Поминки Мармеладова"] },
         5: { title: "Идиот", questions: ["Швейцарские дети", "Именины Настасьи Филипповны"] },
-        6: { title: "Бесы", questions: ["Агрессия толпы", "Революционеры как секта"] },
-        7: { title: "Подросток", questions: ["Обезличивание", "История Джона Ло"] },
-        8: { title: "Братья Карамазовы", questions: ["Сцена у камня", "Соборность"] }
+        6: { title: "Бесы", questions: ["Агрессия толпы", "Революционная группа как секта"] },
+        7: { title: "Подросток", questions: ["Обезличивание среды", "История Джона Ло"] },
+        8: { title: "Братья Карамазовы", questions: ["Сцена у камня", "Феномен соборности"] },
+        9: { title: "Итоговый семинар", questions: ["Защита эссе", "Сравнительный анализ сцен"] }
     };
 
     function showSection(id) {
@@ -216,8 +220,9 @@
         document.getElementById(id).classList.remove('hidden');
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
         if(event) event.currentTarget.classList.add('active');
-        // Прячем картинку на других вкладках для минимализма, если хотите
-        document.getElementById('hero-header').style.display = (id === 'about') ? 'flex' : 'none';
+        
+        // Картинка видна только на вкладке "О курсе"
+        document.getElementById('main-header').style.display = (id === 'about') ? 'block' : 'none';
         closeLesson();
     }
 
