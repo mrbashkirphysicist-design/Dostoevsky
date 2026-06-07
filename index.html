@@ -108,30 +108,42 @@
         },
         sources: {
             lit: { title: "Литература", body: "<ul class='custom-list'><li><b>Бахтин М.М.</b> Проблемы поэтики Достоевского.</li><li><b>Гроссман Л.П.</b> Поэтика Достоевского.</li><li><b>Сараскина Л.И.</b> «Бесы», или Русская трагедия.</li><li><b>Лебон Г.</b> Психология народов и масс.</li></ul>" },
-            pres: { title: "Презентации", body: "<p>Материалы в формате PPTX доступны во внутреннем репозитории кафедры.</p>" },
-            links: { title: "Полезные ссылки", body: "<ul class='custom-list'><li><a href='http://fedordostoevsky.ru' target='_blank'>fedordostoevsky.ru</a> — Электронная библиотека</li><li><a href='https://dostoevskiy.spb.ru' target='_blank'>Музей в Петербурге</a></li></ul>" }
+            pres: { title: "Презентации", body: "<ul class='custom-list'><li><a href='https://drive.google.com/drive/folders/1Jn6dr95o_vxCu-rgvgnq6Oy9TRRpj6Wa?dmr=1&ec=wgc-drive-%5Bmodule%5D-goto' target='_blank'>Презентации к лекциям (Google Диск)</a></li></ul>" },
+            links: { title: "Полезные ссылки", body: "<ul class='custom-list'><li><a href='https://drive.google.com/drive/folders/1Uqbc2uImQfJUiU3uZogaeDVmwIp-Qg2v' target='_blank'>Практические материалы</a></li><li><a href='http://fedordostoevsky.ru' target='_blank'>fedordostoevsky.ru</a> — Электронная библиотека</li><li><a href='https://dostoevskiy.spb.ru' target='_blank'>Музей в Петербурге</a></li></ul>" }
         }
     };
 
-    function showSection(id) {
+    function showSection(id, e) {
         document.querySelectorAll('.section').forEach(s => s.classList.add('hidden'));
         document.getElementById(id).classList.remove('hidden');
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-        if(event) event.currentTarget.classList.add('active');
+        
+        if (e && e.currentTarget) {
+            e.currentTarget.classList.add('active');
+        }
+        
         document.getElementById('main-header').style.display = (id === 'about') ? 'block' : 'none';
-        closeDetail('plan'); closeDetail('sources');
+        closeDetail('plan'); 
+        closeDetail('sources');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     function openDetail(section, id) {
         const info = data[section][id];
+        const detailElement = document.getElementById(`${section}-detail`);
+        
         document.getElementById(`${section}-content`).innerHTML = `<h2>${info.title}</h2>${info.body}`;
         document.getElementById(`${section}-main`).classList.add('hidden');
-        document.getElementById(`${section}-detail`).style.display = 'block';
+        detailElement.style.display = 'block';
+        detailElement.scrollIntoView({ behavior: 'smooth' });
     }
 
     function closeDetail(section) {
-        document.getElementById(`${section}-main`).classList.remove('hidden');
-        document.getElementById(`${section}-detail`).style.display = 'none';
+        const mainElement = document.getElementById(`${section}-main`);
+        if (mainElement) {
+            mainElement.classList.remove('hidden');
+            document.getElementById(`${section}-detail`).style.display = 'none';
+        }
     }
 </script>
 </body>
